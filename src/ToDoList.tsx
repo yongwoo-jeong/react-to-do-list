@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface IFom {
@@ -27,6 +26,8 @@ function ToDoList() {
         { message: "Password are not the same" },
         { shouldFocus: true }
       );
+    } else {
+      console.log(data);
     }
     //  setError("extraError", { message: "server offline" });
   };
