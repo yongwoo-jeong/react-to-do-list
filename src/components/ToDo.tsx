@@ -42,17 +42,3 @@ function ToDo({ text, category, id }: IToDo) {
 }
 
 export default ToDo;
-
-/*
-setTodos((prevTodos) => {
-  const targetIndex = prevTodos.findIndex((todo) => todo.id === id);
-  const newTodo: ITodo = {
-    id,
-    text,
-    category: categoryState as ITodo["category"],
-  };
-  const newTodos = [...prevTodos]; // create new array
-  newTodos.splice(targetIndex, 1, newTodo);
-  return newTodos;
-});
-*/
