@@ -9,11 +9,13 @@ interface ICategoryForm {
 
 function CreateCategory() {
   const setCategories = useSetRecoilState(categoriesState);
-  const { register, handleSubmit } = useForm<ICategoryForm>();
+  const { register, handleSubmit, setValue } = useForm<ICategoryForm>();
   const handleValid = ({ category }: ICategoryForm) => {
     console.log(category);
     setCategories((cat) => [...cat, category]);
+    setValue("category", "");
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit(handleValid)}>
