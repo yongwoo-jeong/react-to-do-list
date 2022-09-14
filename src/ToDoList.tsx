@@ -1,77 +1,50 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
-/* function ToDoList() {
-  const [toDo, settoDo] = useState("");
-  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    settoDo(value);
-  };
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(toDo);
-  };
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input onChange={onChange} value={toDo} placeholder="Write a todo" />
-        <button>Add</button>
-      </form>
-    </div>
-  );
-} */
+import { atom, useRecoilState } from "recoil";
 
 interface IForm {
-  email: string;
-  FirstName: string;
-  LastName: string;
-  username: string;
-  Password: string;
-  PasswordConfirm: string;
+  toDo: string;
 }
 
+interface IToDo {
+  text: string;
+  id: number;
+  category: "TO_DO" | "DOING" | "DONE";
+}
+
+const toDoState = atom<IToDo[]>({
+  key: "toDo",
+  default: [],
+});
+
+//
+//
+
 function ToDoList() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IForm>({
-    defaultValues: {
-      email: "@naver.com",
-    },
-  });
-  const onValid = (data: any) => {
-    console.log(data);
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const { register, handleSubmit, setValue } = useForm<IForm>();
+  const handleValid = ({ toDo }: IForm) => {
+    setToDos((oldToDos) => [
+      { text: toDo, id: Date.now(), category: "TO_DO" },
+      ...oldToDos,
+    ]);
+    setValue("toDo", "");
   };
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onValid)}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
+      <h1>To Dos</h1>
+      <hr />
+      <form onSubmit={handleSubmit(handleValid)}>
         <input
-          {...register("email", {
-            required: "Email is Requiored",
-            pattern: {
-              value: /^[A-Za-z0-9._%+-]+@naver.com$/,
-              message: "Only naver.com emails allowed",
-            },
-          })}
-          placeholder="Email"
-        />
-        <span>{errors?.email?.message}</span>
-        <input {...register("FirstName")} placeholder="First Name" />
-        <input {...register("LastName")} placeholder="Last Name" />
-        <input {...register("username")} placeholder="username" />
-        <input {...register("Password")} placeholder="Password" />
-        <input
-          {...register("PasswordConfirm")}
-          placeholder="Password confirm"
+          {...register("toDo", { required: "Please write a to do" })}
+          placeholder="Write a ToDo"
         />
         <button>Add</button>
       </form>
+      <ul>
+        {toDos.map((toDo) => (
+          <li key={toDo.id}>{toDo.text}</li>
+        ))}
+      </ul>
     </div>
   );
 }
