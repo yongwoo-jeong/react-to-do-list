@@ -11,6 +11,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.20",
+    "gh-pages": "^4.0.0",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
@@ -27,7 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +52,6 @@
   },
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.2"
-  }
+  },
+  "homepage": "https://yongwoo-jeong.github.io/react-to-do-list"
 }
